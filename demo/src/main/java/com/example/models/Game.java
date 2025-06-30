@@ -7,46 +7,41 @@ public class Game {
     private Board board;
     private List<Player> players;
 
+    public Game(Board board,List<Player> players){
+        this.board = board;
+        this.players = players;
+    }
+
     public void play(){
         Player player;
         int turn = 0;
         int count = 0;
-        Scanner sc = new Scanner(System.in);
+       
         while(true){
-            int positionX = sc.nextInt();
-            int positionY = sc.nextInt();
-            Symbol curretnSymbol;
-            count++;
-            if(turn == 0){
-                player = players.get(turn);
-                curretnSymbol = Symbol.O;
-                player.makeMove(player, new Cell(positionX,positionY,curretnSymbol), board);
+            
+           player = players.get(turn);
+           board.printBoard();
+           Cell cell = player.makeMove(board);
+           count++;
+           if(board.checkWinCondition(cell)){
+                System.out.println("Player "+turn + "won ");
+                break;
+           }
 
-            }else{
-                player = players.get(turn);
-                curretnSymbol = Symbol.X;
-                player.makeMove(player,new Cell(positionX, positionY, curretnSymbol), board);
-            }
-            if(checkWinCondition(curretnSymbol)){
+            if(count == board.getN()){
+                System.out.println("Match draw");
                 break;
             }
-            if(checkAllCellsFilled(count)){
-                break;
-            }
+
+            turn = (turn + 1) % players.size();
+        
+              
         }
-        sc.close();
+        
 
     }
 
-    public boolean checkWinCondition(Symbol symbol){
-        return board.checkWinCondition(symbol);
-    }
+   
     
-    public boolean checkAllCellsFilled(int count){
-        if(count == board.getN()){
-            return true;
-        }
-        return false;
-
-    }
+   
 }
