@@ -20,21 +20,36 @@ public class User implements Player {
     }
 
     @Override
+    public Symbol getSymbol() {
+        return this.symbol;
+    }
+
+    @Override
     public Cell makeMove(Board board) {
         // TODO Auto-generated method stub
-
-        
-        
+      while (true) {
         int positionX = sc.nextInt();
         int positionY = sc.nextInt();
         
-        if(board.checkIfCellIsFilled(positionX,positionY)){
-            System.out.println("Cell already filled");
-            return makeMove(board);
+        if(positionX < 0 || positionX >= board.getRows() || positionY >= board.getCols() || positionY < 0){
+            System.out.println("Invalid coordinates. Move is off the board. Please try again.");
+            continue;
         }
-        Cell cell  = board.fillCell(new Cell(positionX, positionY, symbol));
+
+        if(board.checkIfCellIsFilled(positionX,positionY)){
+             System.out.println("Cell already filled. Please try again.");
+             
+        }else{
+            Cell cell  = new Cell(positionX, positionY, symbol);
+            return cell;
+
+        }   
         
-        return cell;
+        
+      }
+        
+        
+        
             
            
        

@@ -20,5 +20,9 @@ public class Bot implements Player{
        return cell;
         
     }
+    @Override
+    public Symbol getSymbol() {
+        return this.symbol;
+    }
     
 }

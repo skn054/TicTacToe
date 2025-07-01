@@ -56,22 +56,18 @@ public class Board {
 
     }
 
-    public void printBoard(){
-        for(int i=0;i<rows;i++){
-            for(int j=0;j<cols;j++){
-                Cell cell = cells.get(i).get(j);
-                if(cell!=null){
-                    System.out.print(cell.getSymbol()+" || ");
-                }else{
-                    System.out.print("--" +" || ");
-                }
-                
+   public void printBoard() {
+    for (List<Cell> row : cells) {
+        for (Cell cell : row) {
+            if (cell.getSymbol() == Symbol.EMPTY) {
+                System.out.print(" _ |");
+            } else {
+                System.out.print(" " + cell.getSymbol() + " |");
             }
-            System.out.println("----------");
         }
-
-         System.out.println("----------");
+        System.out.println("\n-----------");
     }
+}
 
     public boolean checkWinCondition(Cell cell){
         /** check all row */
@@ -96,78 +92,66 @@ public class Board {
 
 
     private boolean checkDiagonalsReverse(Cell cell) {
-        // TODO Auto-generated method stub
-         for(int i=cells.size()-1,j=0;i>=0;i--,j++){
-             List<Cell> row = cells.get(i);
-            // if(row!=null){
-                Cell currCell = row.get(j);
-                if(currCell!=null && currCell.getSymbol() !=cell.getSymbol()){
+       
+        if(cell.getPositionX() + cell.getPositionY() != rows - 1){
+            return false;
+        }
+
+        for(int j=0;j<rows;j++){
+            if(cells.get(j).get(rows - 1 - j).getSymbol()!=cell.getSymbol()){
                 return false;
             }
-            // }
         }
+
         return true;
+
+       
     }
 
 
     private boolean checkDiagonals(Cell cell) {
-        // TODO Auto-generated method stub
-         for(int i=0;i<cells.size();i++){
-            List<Cell> row = cells.get(i);
-           
-                Cell currCell = row.get(i);
-                if(currCell!=null && currCell.getSymbol() !=cell.getSymbol()){
+        
+         if(cell.getPositionX()!=cell.getPositionY()){
+            return false;
+         }
+
+         for(int i=0;i<rows;i++){
+            if(cells.get(i).get(i).getSymbol()!= cell.getSymbol()){
                 return false;
             }
-           
-            
-        }
-        return true;
+         }
+
+         return true;
     }
 
 
     private boolean checkCols(Cell cell) {
-        // TODO Auto-generated method stub
-         for(int i=0;i<cols;i++){
-            boolean flag = false;
-            
-            for(int j=0;j<rows;j++){
-                List<Cell> cols = cells.get(j);
-                    Cell currCell = cols.get(i);
-                    if(currCell!=null && currCell.getSymbol()!=cell.getSymbol()){
-                         flag = true;
-                         break;
-                }   
-            }
-            if(!flag){
-                return true;
+        
+         int positionY = cell.getPositionY();
+        /** check if current move made by player, row matches.. */
+       
+        for(int j=0;j<rows;j++){
+            if(cells.get(j).get(positionY).getSymbol()!=cell.getSymbol()){
+                return false;
             }
         }
-        return false;
+
+        return true;
     }
 
 
     private boolean checkRows(Cell cell) {
-        // TODO Auto-generated method stub
-          for(int i=0;i<rows;i++){
-            List<Cell> row;
-            row = cells.get(i);
-            // if(row!=null){
-            boolean flag = false;
-                for(int j=0;j<row.size();j++){
-                Cell currCell = row.get(j);
-                if(currCell!=null && currCell.getSymbol() != cell.getSymbol()){
-                    flag = true;
-                    break;
-                }
+        
+          int positionX = cell.getPositionX();
+        /** check if current move made by player, row matches.. */
+        List<Cell> currentROw = cells.get(positionX);
+        for(int j=0;j<currentROw.size();j++){
+            if(currentROw.get(j).getSymbol()!=cell.getSymbol()){
+                return false;
             }
-            if(!flag){
-                return true;
-            }
-           
-           
         }
-        return false;
+
+        return true;
     }
     
 }
