@@ -1,7 +1,11 @@
-package com.example.models;
+package com.example;
 
 import java.util.List;
 import java.util.Scanner;
+
+import com.example.models.Board;
+import com.example.models.Cell;
+import com.example.models.Player;
 
 public class Game {
     private Board board;

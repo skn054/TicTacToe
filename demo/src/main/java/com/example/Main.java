@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 import com.example.models.Board;
 import com.example.models.Bot;
-import com.example.models.Game;
 import com.example.models.Player;
 import com.example.models.Symbol;
 import com.example.models.User;
