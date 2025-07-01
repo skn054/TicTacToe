@@ -18,15 +18,24 @@ public class Game {
         int count = 0;
        
         while(true){
-            
+            Cell cell ;
            player = players.get(turn);
+           System.out.println("Before Move --------");
            board.printBoard();
-           Cell cell = player.makeMove(board);
-           count++;
+       
+            cell = player.makeMove(board);
+            
+            System.out.println("After Move --------");
+            board.printBoard();
            if(board.checkWinCondition(cell)){
                 System.out.println("Player "+turn + "won ");
                 break;
            }
+    
+
+           count++;
+          
+           
 
             if(count == board.getN()){
                 System.out.println("Match draw");

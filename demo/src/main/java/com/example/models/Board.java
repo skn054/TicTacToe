@@ -33,19 +33,26 @@ public class Board {
         return cols;
     }
 
+    public boolean checkIfCellIsFilled(int positionX,int positionY){
+         
+         Cell curCell = cells.get(positionX).get(positionY);
+         if(curCell.getSymbol()!=Symbol.EMPTY){
+                return true;
+        }
+        return false;
+    }
+
     public Cell fillCell(Cell cell){
        
        
             int x = cell.getPositionX();
             int y = cell.getPositionY();
-             /** check if cell already occupied */
-            Cell curCell = cells.get(x).get(y);
-            if(curCell.getSymbol()!=Symbol.EMPTY){
-                return curCell;
-            }
-            curCell.setSymbol(cell.getSymbol());
-            // this.cells.get(x).set(y, cell);
-            return curCell;
+           
+            // Cell curCell = cells.get(x).get(y);
+            
+            // curCell.setSymbol(cell.getSymbol());
+            this.cells.get(x).set(y, cell);
+            return cell;
 
     }
 
@@ -68,55 +75,99 @@ public class Board {
 
     public boolean checkWinCondition(Cell cell){
         /** check all row */
-        for(int i=0;i<rows;i++){
+      if(checkRows(cell)){
+        return true;
+      }
+        /** fill this up */
+       if(checkCols(cell)){
+        return true;
+       }
+
+       if(checkDiagonals(cell)){
+        return true;
+       }
+
+        if(checkDiagonalsReverse(cell)){
+            return true;
+        }
+
+        return false;
+    }
+
+
+    private boolean checkDiagonalsReverse(Cell cell) {
+        // TODO Auto-generated method stub
+         for(int i=cells.size()-1,j=0;i>=0;i--,j++){
+             List<Cell> row = cells.get(i);
+            // if(row!=null){
+                Cell currCell = row.get(j);
+                if(currCell!=null && currCell.getSymbol() !=cell.getSymbol()){
+                return false;
+            }
+            // }
+        }
+        return true;
+    }
+
+
+    private boolean checkDiagonals(Cell cell) {
+        // TODO Auto-generated method stub
+         for(int i=0;i<cells.size();i++){
+            List<Cell> row = cells.get(i);
+           
+                Cell currCell = row.get(i);
+                if(currCell!=null && currCell.getSymbol() !=cell.getSymbol()){
+                return false;
+            }
+           
+            
+        }
+        return true;
+    }
+
+
+    private boolean checkCols(Cell cell) {
+        // TODO Auto-generated method stub
+         for(int i=0;i<cols;i++){
+            boolean flag = false;
+            
+            for(int j=0;j<rows;j++){
+                List<Cell> cols = cells.get(j);
+                    Cell currCell = cols.get(i);
+                    if(currCell!=null && currCell.getSymbol()!=cell.getSymbol()){
+                         flag = true;
+                         break;
+                }   
+            }
+            if(!flag){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    private boolean checkRows(Cell cell) {
+        // TODO Auto-generated method stub
+          for(int i=0;i<rows;i++){
             List<Cell> row;
             row = cells.get(i);
             // if(row!=null){
+            boolean flag = false;
                 for(int j=0;j<row.size();j++){
                 Cell currCell = row.get(j);
                 if(currCell!=null && currCell.getSymbol() != cell.getSymbol()){
-                    return false;
+                    flag = true;
+                    break;
                 }
             }
-            // }
+            if(!flag){
+                return true;
+            }
+           
            
         }
-        /** fill this up */
-        for(int i=0;i<cols;i++){
-            for(int j=0;j<rows;j++){
-                List<Cell> cols = cells.get(j);
-                // if(cols!=null){
-                    Cell currCell = cols.get(i);
-                    if(currCell!=null && currCell.getSymbol()!=cell.getSymbol()){
-                    return false;
-                }
-                // }
-                
-            }
-        }
-
-        for(int i=0;i<cells.size();i++){
-            List<Cell> row = cells.get(i);
-            // if(row!=null){
-                Cell currCell = row.get(i);
-                if(currCell!=null && currCell.getSymbol() !=cell.getSymbol()){
-                return false;
-            }
-            // }
-            
-        }
-
-          for(int i=cells.size()-1;i>=0;i--){
-             List<Cell> row = cells.get(i);
-            // if(row!=null){
-                Cell currCell = row.get(i);
-                if(currCell!=null && currCell.getSymbol() !=cell.getSymbol()){
-                return false;
-            }
-            // }
-        }
-
-        return true;
+        return false;
     }
     
 }

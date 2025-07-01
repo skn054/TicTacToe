@@ -27,6 +27,11 @@ public class User implements Player {
         
         int positionX = sc.nextInt();
         int positionY = sc.nextInt();
+        
+        if(board.checkIfCellIsFilled(positionX,positionY)){
+            System.out.println("Cell already filled");
+            return makeMove(board);
+        }
         Cell cell  = board.fillCell(new Cell(positionX, positionY, symbol));
         
         return cell;
